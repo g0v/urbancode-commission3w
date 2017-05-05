@@ -1,4 +1,5 @@
 <?php
+use App\Notes;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,3 +15,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::group(['prefix' => 'api'], function() {
+    // Route::get('/', function () {
+    //     return view('api');
+    // });
+    // Route::get('/minutes/{admin}/{period?}/{session?}', [
+    //     'as' => 'api.minutes',
+    //     'uses' => 'ApiController@getMinutes'
+    // ]);
+// });

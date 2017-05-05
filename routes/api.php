@@ -13,6 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/', function () {
+    return view('api');
 });
+
+Route::get('/minutes/{admin}-{period}-{session}-{round}', [
+    'as' => 'api.minutes',
+    'uses' => 'MinuteController@getMinutes'
+]);
+
+// Route::get('/cases/{case_code}', [
+//     'as' => 'api.cases',
+//     'uses' => 'CaseController@getMinutes'
+// ]);
