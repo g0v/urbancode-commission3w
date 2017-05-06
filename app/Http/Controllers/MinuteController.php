@@ -13,28 +13,54 @@ class MinuteController extends Controller
     public function getMinutes($admin, $period, $session, $round)
     {
         $note_code = $admin.$period.$session.$round;
-        $note_code = preg_replace("/-/", "", $note_code);
         if(!Helpers\validateInput($note_code)) return('error');
 
-        $notes = Notes::where('note_code', '=', $note_code)
+        $note = Notes::where('note_code', '=', $note_code)
                         ->select('origin', 'note_code', 'title', 'date',
                             'start_time', 'end_time', 'location', 'chairman',
                             'note_taker', 'attend_committee', 'attend_unit')
-                        ->get();
+                        ->first();
         $cases = Cases::where('note_code', '=', $note_code)
                         ->pluck('case_code');
 
-        foreach ($notes as $note) {
-            $minute = Helpers\loadInformation($note['original']);
-            $minute['cases'] = [];
-            foreach($cases as $case) {
-                $case_link = "/api/minutes/$admin-$period-$session-$round/cases/$case";
-                array_push($minute['cases'], $case_link);
-            }
-            print_r($minute);
-            echo PHP_EOL;
-            $output = json_encode($minute, JSON_UNESCAPED_UNICODE);
+        $minute = Helpers\loadInformation($note['original']);
+        $minute['cases'] = [];
+        foreach($cases as $case) {
+            $case_link = "/api/minutes/$admin-$period-$session-$round/cases/$case";
+            array_push($minute['cases'], $case_link);
         }
-        // return($output);
+        $output = json_encode($minute, JSON_UNESCAPED_UNICODE);
+
+        return($output);
+    }
+
+    public function getCaseFromMinute($admin, $period, $session, $round, $case_id)
+    {
+        $note_code = $admin.$period.$session.$round;
+        if(!Helpers\validateInput($note_code)) return('error');
+        $case = Cases::where('note_code', '=', $note_code)
+                        ->where('case_code', '=', $case_id)
+                        ->select('note_code', 'type', 'case_title',
+                            'case_code', 'description', 'committee_speak',
+                            'response', 'adhoc', 'resolution', 'add_resolution',
+                            'attached')
+                            ->first();
+
+        $petitions = Petitions::where('case_code', '=', $case_id)
+                                ->select('petition_case', 'petition_num', 'name',
+                                    'location', 'reason', 'suggest', 'response',
+                                    'adhoc', 'resolution')
+                                ->get();
+
+        $output = $case['original'];
+        $output['petitions'] = [];
+
+        foreach ($petitions as $petition) {
+            array_push($output['petitions'], $petition['original']);
+        }
+
+        $output = json_encode($output, JSON_UNESCAPED_UNICODE);
+
+        return($output);
     }
 }
