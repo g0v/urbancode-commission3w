@@ -25,11 +25,13 @@ class MinuteController extends Controller
 
         $minute = Helpers\loadInformation($note['original']);
         $minute['cases'] = [];
+        $host = $_SERVER['HTTP_HOST'];
         foreach($cases as $case) {
-            $case_link = "/api/minutes/$admin-$period-$session-$round/cases/$case";
+            $case_link = "$host/api/minutes/$admin-$period-$session-$round/cases/$case";
             array_push($minute['cases'], $case_link);
         }
-        $output = json_encode($minute, JSON_UNESCAPED_UNICODE);
+        $output = json_encode($minute, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        // $output = preg_replace("/\"/", "", $output);
 
         return($output);
     }

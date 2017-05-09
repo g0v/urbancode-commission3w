@@ -16,6 +16,10 @@ function validateInput($string)
 
 function loadInformation($fromArray)
 {
+    $json_field = [
+        'attend_committee' => 1,
+        'attend_unit' => 1
+        ];
     $replace = [
         'origin' => 'raw_file',
         'note_code' => 'minute_id',
@@ -26,8 +30,10 @@ function loadInformation($fromArray)
         'chairman' => 'chair'
         ];
     foreach($fromArray as $k => $value) {
+        if(isset($json_field[$k])) $value = json_decode($value, JSON_UNESCAPED_UNICODE);
         if(isset($replace[$k])) $k = $replace[$k];
         $toArray[$k] = $value;
     }
+    // print_r($toArray);
     return $toArray;
 }
