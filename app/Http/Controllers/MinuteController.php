@@ -20,18 +20,27 @@ class MinuteController extends Controller
                             'start_time', 'end_time', 'location', 'chairman',
                             'note_taker', 'attend_committee', 'attend_unit')
                         ->first();
-        $cases = Cases::where('note_code', '=', $note_code)
-                        ->pluck('case_code');
+        $caseList = Cases::where('note_code', '=', $note_code)
+                        ->select('case_code', 'case_title')
+                        ->get();
 
         $minute = Helpers\loadInformation($note['original']);
+
         $minute['cases'] = [];
         $host = $_SERVER['HTTP_HOST'];
-        foreach($cases as $case) {
-            $case_link = "$host/api/minutes/$admin-$period-$session-$round/cases/$case";
-            array_push($minute['cases'], $case_link);
+        foreach($caseList as $case) {
+            $caseContent = Helpers\loadInformation($case['original']);
+            $caseCode = $caseContent['case_code'];
+            $caseTitle = '';
+            if(isset($caseContent['case_title'])) {
+                $caseTitle = implode("", $caseContent['case_title']);
+            }
+            $casePack =[];
+            $casePack['case_title'] = $caseTitle;
+            $casePack['url'] = "$host/api/minutes/$admin-$period-$session-$round/cases/$caseCode";
+            array_push($minute['cases'], $casePack);
         }
         $output = json_encode($minute, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        // $output = preg_replace("/\"/", "", $output);
 
         return($output);
     }
@@ -46,7 +55,7 @@ class MinuteController extends Controller
                             'case_code', 'description', 'committee_speak',
                             'response', 'adhoc', 'resolution', 'add_resolution',
                             'attached')
-                            ->first();
+                        ->first();
 
         $petitions = Petitions::where('case_code', '=', $case_id)
                                 ->select('petition_case', 'petition_num', 'name',
@@ -54,14 +63,15 @@ class MinuteController extends Controller
                                     'adhoc', 'resolution')
                                 ->get();
 
-        $output = $case['original'];
+        $output = Helpers\loadInformation($case['original']);
         $output['petitions'] = [];
 
         foreach ($petitions as $petition) {
-            array_push($output['petitions'], $petition['original']);
+            $petitionContent = Helpers\loadInformation($petition['original']);
+            array_push($output['petitions'], $petitionContent);
         }
 
-        $output = json_encode($output, JSON_UNESCAPED_UNICODE);
+        $output = json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         return($output);
     }

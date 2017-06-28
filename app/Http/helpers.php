@@ -18,7 +18,15 @@ function loadInformation($fromArray)
 {
     $json_field = [
         'attend_committee' => 1,
-        'attend_unit' => 1
+        'attend_unit' => 1,
+        'case_title' => 1,
+        'description' => 1,
+        'resolution' => 1,
+        'place' => 1,
+        'reason' => 1,
+        'suggest' => 1,
+        'response' => 1,
+        'adhoc' => 1
         ];
     $replace = [
         'origin' => 'raw_file',
@@ -34,6 +42,5 @@ function loadInformation($fromArray)
         if(isset($replace[$k])) $k = $replace[$k];
         $toArray[$k] = $value;
     }
-    // print_r($toArray);
     return $toArray;
 }
