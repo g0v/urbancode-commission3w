@@ -28,3 +28,10 @@ Route::group(['prefix' => 'minutes/{admin}-{period}-{session}-{round}'], functio
       'uses' => 'MinuteController@getCaseFromMinute'
   ]);
 });
+
+Route::group(['prefix' => 'cases/{case_id}'], function () {
+  Route::get('/', [
+      'as' => 'api.cases',
+      'uses' => 'CaseController@getCases'
+  ]);
+});

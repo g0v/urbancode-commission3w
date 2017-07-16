@@ -16,12 +16,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::group(['prefix' => 'api'], function() {
-    // Route::get('/', function () {
-    //     return view('api');
-    // });
-    // Route::get('/minutes/{admin}/{period?}/{session?}', [
-    //     'as' => 'api.minutes',
-    //     'uses' => 'ApiController@getMinutes'
-    // ]);
-// });
+Route::group(['prefix' => 'minutes'], function() {
+    Route::get('/', function () {
+        return view('minutes');
+    });
+    Route::get('/{admin}-{period}-{session}-{round}',
+        function ($admin, $period, $session, $round) {
+            return view('minutes', ['admin' => $admin,
+                                    'period' => $period,
+                                    'session' => $session,
+                                    'round' => $round]);
+    });
+});

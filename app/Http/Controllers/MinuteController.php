@@ -30,7 +30,7 @@ class MinuteController extends Controller
         $host = $_SERVER['HTTP_HOST'];
         foreach($caseList as $case) {
             $caseContent = Helpers\loadInformation($case['original']);
-            $caseCode = $caseContent['case_code'];
+            $caseCode = $caseContent['case_id'];
             $caseTitle = '';
             if(isset($caseContent['case_title'])) {
                 $caseTitle = implode("", $caseContent['case_title']);

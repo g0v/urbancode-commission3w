@@ -31,6 +31,7 @@ function loadInformation($fromArray)
     $replace = [
         'origin' => 'raw_file',
         'note_code' => 'minute_id',
+        'case_code' => 'case_id',
         'location' => 'place',
         'note_taker' => 'minute_taker',
         'attend_committee' => 'committee_attendance',
