@@ -13,15 +13,32 @@ use App\Notes;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('home');
 });
 
-// Route::group(['prefix' => 'api'], function() {
-    // Route::get('/', function () {
-    //     return view('api');
-    // });
-    // Route::get('/minutes/{admin}/{period?}/{session?}', [
-    //     'as' => 'api.minutes',
-    //     'uses' => 'ApiController@getMinutes'
-    // ]);
-// });
+Route::get('/{admin}', function($admin) {
+    return view('place', ['target' => $admin]);
+});
+
+Route::group(['prefix' => 'minutes'], function() {
+    Route::get('/', function () {
+        return view('minutes');
+    });
+    Route::group(['prefix' => '{admin}-{period}-{session}-{round}'], function () {
+            Route::get('/', function($admin, $period, $session, $round) {
+                return view('minutes', ['admin' => $admin,
+                                        'period' => $period,
+                                        'session' => $session,
+                                        'round' => $round]);
+            });
+
+            Route::get('/cases/{case_id}', function($admin, $period, $session, $round, $caseId) {
+                return view('cases', ['admin' => $admin,
+                                        'period' => $period,
+                                        'session' => $session,
+                                        'round' => $round,
+                                        'caseId' => $caseId]);
+            });
+    });
+});

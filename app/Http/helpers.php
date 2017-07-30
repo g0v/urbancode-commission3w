@@ -16,9 +16,22 @@ function validateInput($string)
 
 function loadInformation($fromArray)
 {
+    $json_field = [
+        'attend_committee' => 1,
+        'attend_unit' => 1,
+        'case_title' => 1,
+        'description' => 1,
+        'resolution' => 1,
+        'place' => 1,
+        'reason' => 1,
+        'suggest' => 1,
+        'response' => 1,
+        'adhoc' => 1
+        ];
     $replace = [
         'origin' => 'raw_file',
         'note_code' => 'minute_id',
+        'case_code' => 'case_id',
         'location' => 'place',
         'note_taker' => 'minute_taker',
         'attend_committee' => 'committee_attendance',
@@ -26,6 +39,7 @@ function loadInformation($fromArray)
         'chairman' => 'chair'
         ];
     foreach($fromArray as $k => $value) {
+        if(isset($json_field[$k])) $value = json_decode($value, JSON_UNESCAPED_UNICODE);
         if(isset($replace[$k])) $k = $replace[$k];
         $toArray[$k] = $value;
     }
