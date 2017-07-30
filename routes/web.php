@@ -13,14 +13,18 @@ use App\Notes;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('home');
+});
+
+Route::get('/{admin}', function($admin) {
+    return view('place', ['target' => $admin]);
 });
 
 Route::group(['prefix' => 'minutes'], function() {
     Route::get('/', function () {
         return view('minutes');
     });
-    // Route::get('/{admin}-{period}-{session}-{round}',
     Route::group(['prefix' => '{admin}-{period}-{session}-{round}'], function () {
             Route::get('/', function($admin, $period, $session, $round) {
                 return view('minutes', ['admin' => $admin,

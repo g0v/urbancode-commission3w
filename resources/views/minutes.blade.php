@@ -19,14 +19,11 @@
                     ];
 @endphp
 
-<html lang="{{ config('app.locale') }}">
-    <head>
-        <meta charset="utf-8">
-        <title>[都委會議記錄資料庫]-{{ $queryArray['title'] }}</title>
-        <link type="text/css" rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
-    </head>
-    <body>
+@extends('main')
 
+@section('title', $queryArray['title'])
+
+@section('content')
         <p><h1>{{ $queryArray['title'] }}</h1></p>
 
         @foreach ($infoSequence as $k => $value)
@@ -44,5 +41,4 @@
         @endforeach
 
         </ol>
-    </body>
-</html>
+@endsection

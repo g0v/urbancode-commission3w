@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 @php
     $url = $_SERVER['HTTP_HOST'].'/api'.$_SERVER['REQUEST_URI'];
     $query = file_get_contents('http://'.$url);
@@ -47,28 +46,35 @@
                         '專案小組意見' => 'adhoc',
                         '決議' => 'resolution'];
 @endphp
-<html lang="{{ config('app.locale') }}">
-    <head>
-        <meta charset="utf-8">
-        <title>[都委會議記錄資料庫]-{{ $queryArray['minute_id'].'-'.$queryArray['case_title'] }}</title>
-        <link type="text/css" rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
-    </head>
-    <body>
-        <p><h1>{{ $queryArray['minute_id'].'-'.$queryArray['type'].'-'.$queryArray['case_title'] }}</h2></p>
-        @foreach ($infoSequence as $k => $value)
-            @if (isset($queryArray["$value"]))
-                <p><span class="heading">{{ $k }}：</span>
-                @if (!in_array($value, $listArray))
-                {{ $queryArray["$value"] }}
-                @elseif ($value == 'petitions')
-                    @foreach ($queryArray["$value"] as $petition)
 
+@extends('main')
+
+@section('title', $queryArray['minute_id'].'-'.$queryArray['case_title'])
+
+@section('content')
+    <p><h1>{{ $queryArray['minute_id'].'-'.$queryArray['type'].'-'.$queryArray['case_title'] }}</h2></p>
+    @foreach ($infoSequence as $k => $value)
+        @if (isset($queryArray["$value"]))
+            <p><span class="heading">{{ $k }}：</span>
+            @if (!in_array($value, $listArray))
+            {{ $queryArray["$value"] }}
+            @elseif ($value == 'committee_speak')
+                @php
+                    $committeeSpeak = json_decode($queryArray["$value"], JSON_UNESCAPED_UNICODE);
+                @endphp
+                <ul>
+                    @foreach ($committeeSpeak as $valueLine)
+                        <li>{!! preg_replace('/\\\r\\\n/', '<br>', $valueLine) !!}</li>
+                    @endforeach
+                </ul>
+            @elseif ($value == 'petitions')
+                @foreach ($queryArray["$value"] as $petition)
                     <div class="petition-list">
                         @foreach ($petitionSequence as $petitionKey => $petitionValue)
                             @if (isset($petition["$petitionValue"]))
                                 <p><span class="petition-heading">{{ $petitionKey }}：</span>
                                     @if (!in_array($petitionValue, $petitionList))
-                                    {{ $petition["$petitionValue"] }}
+                                        {{ $petition["$petitionValue"] }}
                                     @else
                                         <ul>
                                             @foreach ($petition["$petitionValue"] as $petitionLive)
@@ -80,17 +86,15 @@
                             @endif
                         @endforeach
                     </div>
-
+                @endforeach
+            @else
+                <ul>
+                    @foreach ($queryArray["$value"] as $valueLine)
+                        <li>{!! preg_replace('/\\\r\\\n/', '<br>', $valueLine) !!}</li>
                     @endforeach
-                @else
-                    <ul>
-                        @foreach ($queryArray["$value"] as $valueLine)
-                            <li>{!! preg_replace('/\\\r\\\n/', '<br>', $valueLine) !!}</li>
-                        @endforeach
-                    </ul>
-                @endif
-                </p>
+                </ul>
             @endif
-        @endforeach
-    </body>
-</html>
+            </p>
+        @endif
+    @endforeach
+@endsection
