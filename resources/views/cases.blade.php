@@ -1,13 +1,13 @@
 @php
+    use App\Webapps as Webapps;
+
     $url = $_SERVER['HTTP_HOST'].'/api'.$_SERVER['REQUEST_URI'];
     $query = file_get_contents('http://'.$url);
     $queryArray = json_decode($query, JSON_UNESCAPED_UNICODE);
 
     $queryArray['case_title'] = implode('', $queryArray['case_title']);
 
-    $caseType = ['0', '報告事項', '確認事項', '審議事項', '討論事項', '臨時動議'];
-
-    $queryArray['type'] = $caseType[$queryArray['type']];
+    $queryArray['type'] = Webapps\caseType2Name($queryArray['type']);
 
     $listArray = ['description',
                     'committee_speak',

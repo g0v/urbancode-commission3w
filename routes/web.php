@@ -17,12 +17,16 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/search{searchQuery?}', function() {
+    return view('search');
+});
+
 Route::get('/{admin}', function($admin) {
     return view('place', ['target' => $admin]);
 });
 
 Route::group(['prefix' => 'minutes'], function() {
-    Route::get('/', function () {
+    Route::get('/', function() {
         return view('minutes');
     });
     Route::group(['prefix' => '{admin}-{period}-{session}-{round}'], function () {

@@ -35,3 +35,8 @@ Route::group(['prefix' => 'cases/{case_id}'], function () {
       'uses' => 'CaseController@getCases'
   ]);
 });
+
+Route::get('/search{searchQuery?}', [
+    'as' => 'api.search',
+    'uses' => 'SearchController@globalSearch'
+]);
