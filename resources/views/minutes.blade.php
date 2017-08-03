@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 @php
     $url = $_SERVER['HTTP_HOST'].'/api'.$_SERVER['REQUEST_URI'];
     $query = file_get_contents('http://'.$url);

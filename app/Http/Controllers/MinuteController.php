@@ -21,7 +21,7 @@ class MinuteController extends Controller
                             'note_taker', 'attend_committee', 'attend_unit')
                         ->first();
         $caseList = Cases::where('note_code', '=', $note_code)
-                        ->select('case_code', 'case_title')
+                        ->select('case_code', 'case_title', 'type')
                         ->get();
 
         $minute = Helpers\loadInformation($note['original']);
@@ -37,6 +37,7 @@ class MinuteController extends Controller
             }
             $casePack =[];
             $casePack['case_title'] = $caseTitle;
+            $casePack['type'] = $caseContent['type'];
             $casePack['url'] = "$host/api/minutes/$admin-$period-$session-$round/cases/$caseCode";
             array_push($minute['cases'], $casePack);
         }

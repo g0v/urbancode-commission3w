@@ -1,5 +1,7 @@
 @php
     use App\Notes as Notes;
+    use App\Webapps as Webapps;
+
     $placeList = ['MOI' => '內政部',
                     'TPE' => '臺北市',
                     'TAO' => '桃園市',
@@ -28,16 +30,6 @@
                         ->select('note_code', 'title', 'date')
                         ->orderBy('session', 'round', 'desc')
                         ->get();
-
-function noteCode2URL ($noteCode) {
-    $admin = substr($noteCode, 0, 3);
-    $period = substr($noteCode, 3, 1);
-    $session = substr($noteCode, 4, 3);
-    $round = substr($noteCode, 7, 1);
-    $noteCodeURL = $admin.'-'.$period.'-'.$session.'-'.$round;
-    return ($noteCodeURL);
-}
-
 @endphp
 
 @extends('main')
@@ -48,7 +40,7 @@ function noteCode2URL ($noteCode) {
 <ul>
     @foreach ($noteList as $note)
     @if (!empty($note['title']))
-        <li><a href="minutes/{{ noteCode2URL($note['note_code']) }}" target="_blank">[{{ $note['date'] }}] {{ $note['title'] }}</a></li>
+        <li><a href="minutes/{{ Webapps\noteCode2URL($note['note_code']) }}" target="_blank">[{{ $note['date'] }}] {{ $note['title'] }}</a></li>
     @endif
     @endforeach
 </ul>
