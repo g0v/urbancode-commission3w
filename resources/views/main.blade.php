@@ -12,12 +12,16 @@
         @section('navibar')
             <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
                 <div class="container">
-                <a class="navbar-brand" href="#">都市計畫委員會資料庫</a>
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">首頁</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">關於本站</a></li>
-                </ul>
-            </div>
+                    <a class="navbar-brand">都市計畫委員會資料庫</a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">首頁</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">關於本站</a></li>
+                    </ul>
+                    <form class="form-inline mt-2 mt-md-0" action="{{ url('/search/') }}">
+                        <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
             </nav>
         @show
 
