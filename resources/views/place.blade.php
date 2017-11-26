@@ -40,7 +40,7 @@
 <ul>
     @foreach ($noteList as $note)
     @if (!empty($note['title']))
-        <li><a href="minutes/{{ Webapps\noteCode2URL($note['note_code']) }}" target="_blank">[{{ $note['date'] }}] {{ $note['title'] }}</a></li>
+        <li><a href="{{ Webapps\noteCode2URL($note['note_code']) }}" target="_blank">[{{ $note['date'] }}] {{ $note['title'] }}</a></li>
     @endif
     @endforeach
 </ul>

@@ -4,11 +4,12 @@ namespace App\Webapps;
 
 function noteCode2URL($noteCode)
 {
+    $host = $_SERVER['HTTP_HOST'];
     $admin = substr($noteCode, 0, 3);
     $period = substr($noteCode, 3, 1);
     $session = substr($noteCode, 4, 3);
     $round = substr($noteCode, 7, 1);
-    $noteCodeURL = $admin.'-'.$period.'-'.$session.'-'.$round;
+    $noteCodeURL = 'http://'.$host.'/minutes/'.$admin.'-'.$period.'-'.$session.'-'.$round;
     return ($noteCodeURL);
 }
 

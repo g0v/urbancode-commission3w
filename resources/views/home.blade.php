@@ -31,9 +31,9 @@
 
 @section('content')
     <div class="place-list">
-    <ul>
+    <ul class="list-group">
     @foreach ($placeList as $placeKey => $place)
-        <li><a href="/{{ $placeKey }}">{{ $place }}</a></li>
+        <li class="list-group-item"><a href="/{{ $placeKey }}">{{ $place }}</a></li>
     @endforeach
     </ul>
     </div>
