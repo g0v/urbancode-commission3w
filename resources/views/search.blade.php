@@ -24,8 +24,9 @@
 
             $minute_url = Webapps\noteCode2URL($case['note_code']);
             $caseType = Webapps\caseType2Name($case['type']);
+            $caseDate = $case['note_date'];
         @endphp
-        <li><a href="minutes/{{ $minute_url }}/cases/{{ $case['case_code'] }}">{{ '['.$caseType.'] '.$caseTitle }}</a></li>
+        <li><a href="{{ $minute_url }}/cases/{{ $case['case_code'] }}">{{ '['.$caseDate.']['.$caseType.'] '.$caseTitle }}</a></li>
     @endforeach
     <ul>
 @endsection

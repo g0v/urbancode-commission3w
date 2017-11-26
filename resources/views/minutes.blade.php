@@ -3,8 +3,12 @@
     $query = file_get_contents('http://'.$url);
     $queryArray = json_decode($query, JSON_UNESCAPED_UNICODE);
 
-    $queryArray['committee_attendance'] = implode('', $queryArray['committee_attendance']);
-    $queryArray['other_attendace'] = implode('', $queryArray['other_attendace']);
+    if ($queryArray['committee_attendance']) {
+        $queryArray['committee_attendance'] = implode('', $queryArray['committee_attendance']);
+    }
+    if ($queryArray['other_attendace']) {
+        $queryArray['other_attendace'] = implode('', $queryArray['other_attendace']);
+    }
 
     $caseList = $queryArray['cases'];
 
@@ -23,7 +27,7 @@
 @section('title', $queryArray['title'])
 
 @section('content')
-        <p><h1>{{ $queryArray['title'] }}</h1></p>
+        <h1>{{ $queryArray['title'] }}</h1>
 
         @foreach ($infoSequence as $k => $value)
             <p><span class="heading">{{ $k }}：</span>{{ $queryArray["$value"] }}</p>
@@ -36,7 +40,7 @@
             @php
                 $url = preg_replace("/\/api/", '', $case['url']);
             @endphp
-            <li><a target="_blank" href="http://{{ $url }}">{{ $case['case_title'] }}</a></li>
+            <li><a href="http://{{ $url }}">{{ $case['case_title'] }}</a></li>
         @endforeach
 
         </ol>

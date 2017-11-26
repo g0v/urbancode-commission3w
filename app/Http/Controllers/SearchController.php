@@ -19,7 +19,7 @@ class SearchController extends Controller
                                 ->orWhere('resolution', 'LIKE', '%'.$searchQuery.'%')
                                 ->orWhere('add_resolution', 'LIKE', '%'.$searchQuery.'%')
                                 ->orWhere('attached', 'LIKE', '%'.$searchQuery.'%')
-                                ->select('note_code', 'type', 'case_title', 'case_code')
+                                ->select('note_code', 'note_date', 'type', 'case_title', 'case_code')
                                 ->get();
 
         $outputCount = count($searchOutputs);

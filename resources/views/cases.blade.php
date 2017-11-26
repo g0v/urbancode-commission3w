@@ -52,10 +52,18 @@
 @section('title', $queryArray['minute_id'].'-'.$queryArray['case_title'])
 
 @section('content')
-    <p><h1>{{ $queryArray['minute_id'].'-'.$queryArray['type'].'-'.$queryArray['case_title'] }}</h2></p>
+    <h1 class="text-dark">{{ $queryArray['minute_id'].'-'.$queryArray['type'].'-'.$queryArray['case_title'] }}</h1>
+    <p></p>
+    <h2 class="text-info">會議紀錄id</h2>
+    <p>
+        <span>
+            <a href="{{ Webapps\noteCode2URL($queryArray['minute_id']) }}">{{ $queryArray['minute_id'] }}</a>
+        </span>
+    </p>
     @foreach ($infoSequence as $k => $value)
-        @if (isset($queryArray["$value"]))
-            <p><span class="heading">{{ $k }}：</span>
+        @if (isset($queryArray["$value"]) && $queryArray["$value"])
+            <h2 class="text-info">{{ $k }}</h2>
+            {{-- <p><span class="heading">{{ $k }}：</span> --}}
             @if (!in_array($value, $listArray))
             {{ $queryArray["$value"] }}
             @elseif ($value == 'committee_speak')
@@ -88,8 +96,18 @@
                     </div>
                 @endforeach
             @else
+                @if (!is_array($queryArray["$value"]))
+                    @php
+                        $queryArray["$value"] = json_decode($queryArray["$value"], JSON_UNESCAPED_UNICODE);
+                    @endphp
+                @endif
                 <ul>
                     @foreach ($queryArray["$value"] as $valueLine)
+                        @php
+                            if (is_array($valueLine)) {
+                                $valueLine = $valueLine[0];
+                            }
+                        @endphp
                         <li>{!! preg_replace('/\\\r\\\n/', '<br>', $valueLine) !!}</li>
                     @endforeach
                 </ul>
