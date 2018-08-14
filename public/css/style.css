@@ -2,7 +2,7 @@ body {
 	/*font-size: small;*/
 	/*font-weight: normal;*/
 	font-family: "微軟正黑體", "Microsoft JhengHei", Verdana, Geneva, Arial, sans-serif;
-	padding-top: 4.5rem;
+	/* padding-top: 4.5rem; */
 }
 
 header {
@@ -25,6 +25,10 @@ h1 {
 
 h2 {
 	font-size: 1.2rem;
+}
+
+.navbar {
+	margin-bottom: 1rem;
 }
 
 .heading {
