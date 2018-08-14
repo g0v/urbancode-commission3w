@@ -10,9 +10,10 @@
     </head>
     <body>
         @section('navibar')
-            <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
+            <nav class="navbar navbar-expand navbar-light bg-light">
+                 {{-- fixed-top"> --}}
                 <div class="container">
-                    <a class="navbar-brand">都市計畫委員會資料庫</a>
+                    <a class="navbar-brand">都市計畫委員會會議記錄資料庫 beta</a>
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">首頁</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">關於本站</a></li>
