@@ -16,6 +16,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/committee', function () {
+    return view('committee');
+});
+
 Route::get('/about', function () {
     return view('about');
 });

@@ -1,6 +1,6 @@
 @extends('main')
 
-@section('title', '首頁')
+@section('title', '關於本站')
 
 @section('content')
     <p>g0v 開放都市計畫專案</p>

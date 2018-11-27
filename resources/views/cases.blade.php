@@ -2,7 +2,7 @@
     use App\Webapps as Webapps;
 
     $url = $_SERVER['HTTP_HOST'].'/api'.$_SERVER['REQUEST_URI'];
-    $query = file_get_contents('http://'.$url);
+    $query = file_get_contents('https://'.$url);
     $queryArray = json_decode($query, JSON_UNESCAPED_UNICODE);
 
     $queryArray['case_title'] = implode('', $queryArray['case_title']);
