@@ -13,10 +13,11 @@
             <nav class="navbar navbar-expand navbar-light bg-light">
                  {{-- fixed-top"> --}}
                 <div class="container">
-                    <a class="navbar-brand">都市計畫委員會會議記錄資料庫 beta</a>
+                    <a class="navbar-brand">都市計畫委員會會議記錄資料庫 <span class="text-info">beta</span></a>
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">首頁</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">關於本站</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/committee') }}">委員會名單</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">關於本站</a></li>
                     </ul>
                     <form class="form-inline mt-2 mt-md-0" action="{{ url('/search/') }}">
                         <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
