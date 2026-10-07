@@ -13,7 +13,7 @@
     </p>
 
     @php
-    $filename = storage_path('app\committee.csv');
+    $filename = storage_path('app/committee.csv');
     $file = fopen($filename, "r");
     $all_data = array();
     while ( ($data = fgetcsv($file, 200, ",")) !==FALSE)
